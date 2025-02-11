@@ -4,6 +4,9 @@ from tkinter import messagebox, PhotoImage
 def startup():
     messagebox.showinfo("IMPORTANT", "BE CAREFUL AS AFTER A FILE IS SHREDDED, RECOVERING IT WILL BE DIFFICULT")
 
+def shredComplete():
+    messagebox.showinfo("ALERT", "SHRED COMPLETE")
+
 # Main window properties
 root = tk.Tk()
 root.title("Shredder Program")
