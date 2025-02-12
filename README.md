@@ -11,4 +11,4 @@ Built with base-layer Python and a couple modules from it
 # 📝 Notes 📝
 
 ### Help:
-Feel free to let issues and concerns be known on the issues tab
+Feel free to let issues and concerns be known in the issues tab
