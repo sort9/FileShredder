@@ -14,7 +14,7 @@ def startupMessage():
 def shredCompleteMessage():
     messagebox.showinfo("ALERT", "SHRED COMPLETE") # Message box for when shred operation is complete
 
-def browsefunc():
+def browse():
     global filename
     filename = filedialog.askopenfilename(filetypes=(("txt files", "*.txt"), ("All files", "*.*")))
     entry_file_input.insert(tk.END, filename)  # Insert the file path into the Entry widget
@@ -27,6 +27,7 @@ def shredFile():
     with open(filename, 'w') as file:
         for i in range(0, characterCount):
             content = file.write(alphanumeric[random_alphanumeric_index])
+            file.flush() # To save file new file content without waiting for the buffer to flush and immediately save file to disk
     os.remove(filename)
     shredCompleteMessage()
 
@@ -46,7 +47,7 @@ entry_file_input = tk.Entry(root, font=40)
 entry_file_input.pack(side="left")
 
 # Browse Button
-browse_button = tk.Button(root, text="Browse", font=40, command=browsefunc)
+browse_button = tk.Button(root, text="Browse", font=40, command=browse)
 browse_button.pack(side="left", padx=5, pady=10)
 
 # Shred Button
