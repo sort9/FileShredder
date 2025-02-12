@@ -1,6 +1,9 @@
 # FileShredder
 Python-based open-source file shredder
 
+# 💡 Future Additions 💡
+- Able to select multiple files at a time to shred (incomplete)
+
 # 💻 Tech Stack 💻
 
 ### GUI: 
