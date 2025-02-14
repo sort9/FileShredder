@@ -3,6 +3,7 @@ from tkinter import messagebox, PhotoImage, filedialog
 import string
 from random import randint
 import os
+from datetime import datetime
 
 # List of alphanumeric values to replace file contents with
 alphanumeric = list(string.ascii_lowercase + string.ascii_uppercase + string.digits)
@@ -28,8 +29,20 @@ def shredFile():
         for i in range(0, characterCount):
             content = file.write(alphanumeric[random_alphanumeric_index])
             file.flush() # To save file new file content without waiting for the buffer to flush and immediately save file to disk
+    logFileDestruction()
     os.remove(filename)
+    entry_file_input.delete("0", "end") # Remove entry box content after shred is complete
     shredCompleteMessage()
+
+def createLogFile():
+    currentTime = datetime.now()
+    with open("events.log", "w") as file:
+        file.write(str(currentTime) + " Log File Created")
+
+def logFileDestruction():
+    currentTime = datetime.now()
+    with open("events.log", "a") as file:
+        file.write("\n" + str(currentTime) + " " + str(filename) + " shredded")
 
 # Main window properties
 root = tk.Tk()
@@ -59,6 +72,10 @@ root.eval('tk::PlaceWindow . center')
 
 # Display Startup
 startupMessage()
+
+# Start Log File
+currentTime = datetime.now()
+createLogFile()
 
 # Run the main loop for then window
 root.mainloop()
