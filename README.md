@@ -1,7 +1,8 @@
 # FileShredder
 Python-based open-source file shredder. Currently only works for **Windows**.
 
-# 💡 Future Additions 💡
+# 💡 Features: Present and Future 💡
+- Able to select a single file to shred (complete)
 - Able to select multiple files at a time to shred (incomplete)
 - Error handling (incomplete)
 - Program logs (incomplete)
