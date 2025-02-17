@@ -10,10 +10,13 @@ alphanumeric = list(string.ascii_lowercase + string.ascii_uppercase + string.dig
 random_alphanumeric_index = randint(0, len(alphanumeric) - 1)
 
 def startupMessage():
-    messagebox.showinfo("IMPORTANT", "BE CAREFUL AS AFTER A FILE IS SHREDDED, RECOVERING IT WILL BE DIFFICULT") # Message box for when program start up is complete
+    messagebox.showwarning("IMPORTANT", "BE CAREFUL AS AFTER A FILE IS SHREDDED, RECOVERING IT WILL BE DIFFICULT") # Message box for when program start up is complete
 
 def shredCompleteMessage():
     messagebox.showinfo("ALERT", "SHRED COMPLETE") # Message box for when shred operation is complete
+
+def shredErrorMessage():
+    messagebox.showerror("ERROR", "NO FILE SELECTED")
 
 def browse():
     global filename
@@ -21,18 +24,21 @@ def browse():
     entry_file_input.insert(tk.END, filename)  # Insert the file path into the Entry widget
 
 def shredFile():
-    with open(filename, 'r') as file:
-        global content
-        content = file.read()
-        characterCount = len(content)
-    with open(filename, 'w') as file:
-        for i in range(0, characterCount):
-            content = file.write(alphanumeric[random_alphanumeric_index])
-            file.flush() # To save file new file content without waiting for the buffer to flush and immediately save file to disk
-    logFileDestruction()
-    os.remove(filename)
-    entry_file_input.delete("0", "end") # Remove entry box content after shred is complete
-    shredCompleteMessage()
+    try:
+        with open(filename, 'r') as file:
+            global content
+            content = file.read()
+            characterCount = len(content)
+        with open(filename, 'w') as file:
+            for i in range(0, characterCount):
+                content = file.write(alphanumeric[random_alphanumeric_index])
+                file.flush() # To save file new file content without waiting for the buffer to flush and immediately save file to disk
+            logFileDestruction()
+            os.remove(filename)
+            entry_file_input.delete("0", "end") # Remove entry box content after shred is complete
+            shredCompleteMessage()
+    except:
+        shredErrorMessage()
 
 def createLogFile():
     currentTime = datetime.now()
