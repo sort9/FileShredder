@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import messagebox, PhotoImage, filedialog
+from tkinter import messagebox, PhotoImage, filedialog, ttk
 import string
 from random import randint
 import os
@@ -44,38 +44,67 @@ def logFileDestruction():
     with open("events.log", "a") as file:
         file.write("\n" + str(currentTime) + " " + str(filename) + " shredded")
 
-# Main window properties
-root = tk.Tk()
-root.title("Shredder Program")
-root.geometry("450x200") # Base window dimensions
-icon = PhotoImage(file='icons/314495_shredder_icon.png') # Set program icon
-root.iconphoto(True, icon)
-root.config(bg="gray64")
+def createFileShredTab(tab):
+    label = ttk.Label(tab)
+    label.pack(padx=20, pady=20)
 
-# File Input Entry Area
-label_file_input = tk.Label(root, font=("Gill Sans MT", 11, "bold"), text="File to shred:")
-label_file_input.pack(side="left", padx=10, pady=10)
-label_file_input.config(bg="gray64")
-entry_file_input = tk.Entry(root, font=40)
-entry_file_input.pack(side="left")
+    # File Input Entry Area
+    global label_file_input
+    label_file_input = tk.Label(tab, font=("Gill Sans MT", 11, "bold"), text="File to shred:")
+    label_file_input.pack(side="left", padx=10, pady=10)
+    label_file_input.config(bg="gray64")
+    global entry_file_input
+    entry_file_input = tk.Entry(tab, font=40)
+    entry_file_input.pack(side="left")
 
-# Browse Button
-browse_button = tk.Button(root, text="Browse", font=40, command=browse)
-browse_button.pack(side="left", padx=5, pady=10)
+    # Browse Button
+    global browse_button
+    browse_button = tk.Button(tab, text="Browse", font=40, command=browse)
+    browse_button.pack(side="left", padx=5, pady=10)
 
-# Shred Button
-shred_button = tk.Button(root, text="Shred", font=40, command=shredFile)
-shred_button.pack(side="left",  padx=5, pady=10)
+    # Shred Button
+    global shred_button
+    shred_button = tk.Button(tab, text="Shred", font=40, command=shredFile)
+    shred_button.pack(side="left",  padx=5, pady=10)
 
-# Program opens opens in the center of the screen
-root.eval('tk::PlaceWindow . center')
+def createDirectoryShredTab(tab):
+    label = ttk.Label(tab, text="PLACEHOLDER")
+    label.pack(padx=20, pady=20)
 
-# Display Startup
-startupMessage()
+def main():
 
-# Start Log File
-currentTime = datetime.now()
-createLogFile()
+    # Main window properties
+    root = tk.Tk()
+    root.title("Shredder Program")
+    root.geometry("550x200") # Base window dimensions
+    icon = PhotoImage(file='icons/314495_shredder_icon.png') # Set program icon
+    root.iconphoto(True, icon)
+    root.config(bg="gray64")
 
-# Run the main loop for then window
-root.mainloop()
+    notebook = ttk.Notebook(root)
+
+    tab1 = ttk.Frame(notebook)
+    tab2 = ttk.Frame(notebook)
+
+    notebook.add(tab1, text="File Shredding")
+    notebook.add(tab2, text="Directory Shredding")
+
+    createFileShredTab(tab1)
+    createDirectoryShredTab(tab2)
+
+    notebook.pack(padx=10, pady=10, fill="both", expand=True)
+
+    # Program opens opens in the center of the screen
+    root.eval('tk::PlaceWindow . center')
+
+    # Display Startup
+    startupMessage()
+
+    # Start Log File
+    currentTime = datetime.now()
+    createLogFile()
+
+    root.mainloop()
+
+if __name__ == "__main__":
+    main()
